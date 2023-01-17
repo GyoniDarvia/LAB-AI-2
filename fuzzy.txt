@@ -1,0 +1,63 @@
+diketahui :
+permintaan => a : 1000
+		b : 5000
+persediaan => a : 100
+		b : 600
+Produksinya maksimum b = 8000 pasang/hari. Minimum a = 2000 pasang.
+Jika permintaan : 4000 dan persediaan : 300, dengan rules
+[R1] IF Permintaan TURUN and Persediaan BANYAK THEN Produksi BERKURANG
+[R2] IF Permintaan TURUN and Persediaan SEDIKIT THEN Produksi BERKURANG
+[R3] IF Permintaan NAIK and Persediaan BANYAK THEN Produksi BERTAMBAH
+[R4] IF Permintaan NAIK and Persediaan SEDIKIT THEN Produksi BERTAMBAH
+
+Jawab :
+1)	Fuzzyfication
+-	PermintaanNaik
+	x <= a, 			maka miu = 0
+	x >= a && x<= b, 	maka miu = x – a / b – a
+	x >= b,			maka miu = 1
+-	PermintaanTurun
+	x <= a, 			maka miu = 1
+	x >= a && x<= b, 	maka miu = b - x / b – a
+	x >= b,			maka miu = 0
+-	PersediaanBanyak
+	x <= a, 			maka miu = 0
+	x >= a && x<= b, 	maka miu = x – a / b – a
+	x >= b,			maka miu = 1
+-	PersediaanSedikit
+	x <= a, 			maka miu = 1
+	x >= a && x<= b, 	maka miu = b - x / b – a
+	x >= b,			maka miu = 0
+
+-	PersediaanBerkurang(Turun)
+	b – x / b - a
+-	PersediaanBertambah(Naik)
+	x – a / b – a
+
+2)	Inference
+[R1] IF Permintaan TURUN and Persediaan BANYAK THEN Produksi BERKURANG
+	a-pre1 = min(permintaanTurun, persediaanBanyak)
+	
+	z1 =   (produksiMax) – ((produksiMax  - produksiMin) * a-pre1)
+
+[R2] IF Permintaan TURUN and Persediaan SEDIKIT THEN Produksi BERKURANG
+	a-pre2 = min(permintaanTurun, persediaanSedikit)
+
+	z2 = (produksiMax) – ((produksiMax  - produksiMin)  * a-pre2)
+
+[R3] IF Permintaan NAIK and Persediaan BANYAK THEN Produksi BERTAMBAH
+	a-pre3 = min(permintaanNaik, persediaanBanyak)
+
+	z3 = (produksiMin)  + ((produksiMax  - produksiMin)  * a-pre3 )
+
+[R4] IF Permintaan NAIK and Persediaan SEDIKIT THEN Produksi BERTAMBAH
+	a-pre4 = min(permintaanNaik, persediaanBanyak)
+
+	z4 = (produksiMin)  + ((produksiMax  - produksiMin)  * a-pre4 )
+
+3)	Defuzzyfication
+	Z = (a-pre1 * z1) + (a-pre2 * z2) + (a-pre3 * z3) + (a-pre4 * z4) 
+			a-pre1 + a-pre2 + a-pre3 + a-pre4
+
+
+
