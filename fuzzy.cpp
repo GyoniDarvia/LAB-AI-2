@@ -67,24 +67,28 @@ float inference(){
     cout << "   [R1] IF Permintaan TURUN And Persediaan BANYAK THEN Produksi Barang BERKURANG" << endl;
     a_pre1 = min(permintaanTurun(x), persediaanBanyak(y));
     cout << "   a-prediket1 = " << a_pre1 << endl;
+    //z1 =   (produksiMax) – ((produksiMax  - produksiMin) * a-pre1)
     z1 = (8000) - (6000 * a_pre1);
     cout << "   Z1 = " << z1 << endl << endl;
-
+    
     cout << "   [R2] IF Permintaan TURUN And Persediaan SEDIKIT THEN Produksi Barang BERKURANG" << endl;
     a_pre2 = min(permintaanTurun(x), persediaanSedikit(y));
     cout << "   a-prediket2 = " << a_pre2 << endl;
+    //z2 = (produksiMax) – ((produksiMax  - produksiMin)  * a-pre2)
     z2 = 8000 - (6000 * a_pre2);
     cout << "   Z2 = " << z2 << endl << endl;
 
     cout << "   [R3] IF Permintaan NAIK And Persediaan BANYAK THEN Produksi Barang BERTAMBAH" << endl;
     a_pre3 = min(permintaanNaik(x), persediaanBanyak(y));
     cout << "   a-prediket3 = " << a_pre3 << endl;
+    //z3 = (produksiMin)  + ((produksiMax  - produksiMin)  * a-pre3 )
     z3 = (2000) + (6000 * a_pre3);
     cout << "   Z3 = " << z3 << endl << endl;
 
     cout << "   [R4] IF Permintaan NAIK And Persediaan SEDIKIT THEN Produksi Barang BERTAMBAH" << endl;
     a_pre4 = min(permintaanNaik(x), persediaanSedikit(y));
     cout << "   a-prediket4 = " << a_pre4 << endl;
+    //z4 = (produksiMin)  + ((produksiMax  - produksiMin)  * a-pre4 )
     z4 = (2000) + (6000 * a_pre4);
     cout << "   Z4 = " << z4 << endl << endl;
 
